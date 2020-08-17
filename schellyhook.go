@@ -296,6 +296,10 @@ func runBackup(apiID string) {
 }
 
 func createAPIID() string {
-	uuid := uuid.NewV4()
-	return uuid.String()
+	uuid, err := uuid.NewV4()
+	if err != nil {
+		logrus.Debugf("Something went wrong: %s", err)
+		return ""
+	}
+	return time.Now().Format("20060102150405")+"--"+uuid.String()
 }
